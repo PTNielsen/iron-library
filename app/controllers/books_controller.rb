@@ -2,7 +2,7 @@ class BooksController < ApplicationController
 
   def index
     @available_books = Book.where(available: true)
-    @reserved_books = Book.where(available: false)
+    @reserved_books = Book.where(available: false).includes(:users)
   end
 
   def show
@@ -38,6 +38,7 @@ class BooksController < ApplicationController
     if current_user.admin?
       @book = Book.find_by_id params[:id]
       @book.update(book_params)
+
       redirect_to @book, notice: "Record updated"
     else
       flash[:warning] = "Failed to update record"
@@ -49,24 +50,27 @@ class BooksController < ApplicationController
     if current_user.admin?
       @book = Book.find_by_id params[:id]
       @book.delete[:id]
+
       redirect_to books_path, notice: "Record has been deleted"
     else
       redirect_to books_path, notice: "Insufficient Admin Privileges"
     end
   end
 
-  # def reserve
-  #   @book = Book.find_by_id params[:book_id]
-  #   fail
-  #   @book.update! (available?: false)
-  #   t = Time.now + 2.weeks
-  #   checkout_log = current_user.histories.create! (book_id: @book, due_date: :(t.at_end_of_day)
-  #   if checkout_log.save
-  #     redirect_to @book, notice: "You have checked out #{@book.title}"
-  #   else
-  #     render :index, notice: "#{@book.title} is unable to be checked out"
-  #   end
-  # end
+  def checkout
+    @book = Book.find_by_id params[:book_id]
+    @book.update!(available: false)
+
+    t = Time.now + 2.weeks
+    t = t.at_end_of_day
+
+    checkout_log = current_user.checkout_histories.create!(book_id: @book.id, due_date: t)
+    if checkout_log.save
+      redirect_to @book, notice: "You have checked out #{@book.title}"
+    else
+      render :index, notice: "#{@book.title} is unable to be checked out"
+    end
+  end
 
 private
 

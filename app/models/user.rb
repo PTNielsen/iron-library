@@ -4,5 +4,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :checkout_histories
   has_many :books, through: :checkout_histories
 end

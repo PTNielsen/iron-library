@@ -66,6 +66,9 @@ GEM
       kaminari (>= 0.13)
       rails (>= 3.1)
     builder (3.2.2)
+    bullet (4.14.7)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.9.0)
     capybara (2.4.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -227,6 +230,7 @@ GEM
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    uniform_notifier (1.9.0)
     warden (1.2.3)
       rack (>= 1.0)
     xpath (2.0.0)
@@ -240,6 +244,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-kaminari-views
   bootstrap_form!
+  bullet
   capybara
   coffee-rails (~> 4.1.0)
   devise

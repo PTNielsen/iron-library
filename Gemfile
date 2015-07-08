@@ -33,6 +33,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'did_you_mean'
   gem 'binding_of_caller'
+  gem 'bullet'
 end
 
 group :production do

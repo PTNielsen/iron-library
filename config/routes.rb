@@ -3,4 +3,6 @@ Rails.application.routes.draw do
   resources :books
 
   root "books#index"
+
+  patch "/books/:id/checkout" => "books#checkout"
 end

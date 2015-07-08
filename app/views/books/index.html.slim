@@ -1,5 +1,8 @@
 h1 Available:
 
+- if current_user.admin?
+  = button_to "Add Book", new_book_path, method: :get
+
 table.table.table-striped.table-hover
   thead
     tr
@@ -29,8 +32,5 @@ table.table.table-striped.table-hover
         td= link_to book.title, book
         td= book.author
         td= book.campus
-        / td= book.histories.user_id.email
-        / td= book.histories.due_date
-
-- if current_user.admin?
-  = button_to "Add Book", new_book_path, method: :get
+        td= book.users.last.email
+        td= book.checkout_histories.last.due_date
