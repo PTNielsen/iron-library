@@ -1,8 +1,8 @@
 class BooksController < ApplicationController
 
   def index
-    @available_books = Book.where(available?: true)
-    @reserved_books = Book.where(available?: false)
+    @available_books = Book.where(available: true)
+    @reserved_books = Book.where(available: false)
   end
 
   def show
