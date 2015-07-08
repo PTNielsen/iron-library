@@ -1,0 +1,36 @@
+h1 Available:
+
+table.table.table-striped.table-hover
+  thead
+    tr
+      th Title
+      th Author
+      th Campus
+  tbody
+    - @available_books.each do |book|
+      tr
+        td= link_to book.title, book
+        td= book.author
+        td= book.campus
+
+h1 Checked Out:
+
+table.table.table-striped.table-hover
+  thead
+    tr
+      th Title
+      th Author
+      th Campus
+      th Checked Out By
+      th Due Back By
+  tbody
+    - @reserved_books.each do |book|
+      tr
+        td= link_to book.title, book
+        td= book.author
+        td= book.campus
+        / td= book.histories.user_id.email
+        / td= book.histories.due_date
+
+- if current_user.admin?
+  = button_to "Add Book", new_book_path, method: :get

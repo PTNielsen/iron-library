@@ -1,0 +1,25 @@
+p Avatar for Book
+
+h1 #{@book.title}
+
+| by #{@book.author}
+
+br/
+
+br/
+
+- if @book.available?
+  = form_tag checkout_path, method: :patch
+    input type="hidden" name="user_id" value=current_user.id
+    input type="hidden" name="book_id" value=@book.id
+    button.btn.btn-primary Checkout
+
+br/
+
+- if current_user.admin?
+  = button_to "Edit Record", edit_book_path, method: :get
+
+  br/
+
+  #delete
+    = button_to "Delete Record", book_path, method: :delete
