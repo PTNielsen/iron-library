@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   root "books#index"
 
   patch "/books/:id/checkout" => "books#checkout"
+  
+  patch "/books/:id/return" => "books#return"
 end

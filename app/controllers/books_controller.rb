@@ -72,6 +72,19 @@ class BooksController < ApplicationController
     end
   end
 
+  def return
+    @book = Book.find_by_id params[:book_id]
+    @book.update!(available: true)
+
+    returned_book_log = CheckoutHistory.where(book_id: params[:book_id]).last
+    returned_book_log.update!(returned: true)
+    if returned_book_log.save
+      redirect_to @book, notice: "You have returned #{@book.title}"
+    else
+      redirect_to @book, notice: "An error occured while returning #{@book.title}"
+    end
+  end
+
 private
 
   def book_params
