@@ -6,5 +6,5 @@ Rails.application.routes.draw do
 
   patch "/books/:id/checkout" => "books#checkout"
   
-  patch "/books/:id/return" => "books#return"
+  patch "/books/:id/return" => "books#checkin"
 end

@@ -6,7 +6,7 @@ class BooksController < ApplicationController
   end
 
   def show
-    @book = Book.find_by_id params[:id]
+    @book = Book.find params[:id]
   end
 
   def new
@@ -31,12 +31,12 @@ class BooksController < ApplicationController
   end
 
   def edit
-    @book = Book.find_by_id params[:id]
+    @book = Book.find params[:id]
   end
 
   def update
     if current_user.admin?
-      @book = Book.find_by_id params[:id]
+      @book = Book.find params[:id]
       @book.update(book_params)
 
       redirect_to @book, notice: "Record updated"
@@ -48,8 +48,8 @@ class BooksController < ApplicationController
 
   def destroy
     if current_user.admin?
-      @book = Book.find_by_id params[:id]
-      @book.delete[:id]
+      @book = Book.find params[:id]
+      @book.delete
 
       redirect_to books_path, notice: "Record has been deleted"
     else
@@ -58,7 +58,7 @@ class BooksController < ApplicationController
   end
 
   def checkout
-    @book = Book.find_by_id params[:book_id]
+    @book = Book.find params[:book_id]
     @book.update!(available: false)
 
     t = Time.now + 2.weeks
@@ -72,8 +72,8 @@ class BooksController < ApplicationController
     end
   end
 
-  def return
-    @book = Book.find_by_id params[:book_id]
+  def checkin
+    @book = Book.find params[:book_id]
     @book.update!(available: true)
 
     returned_book_log = CheckoutHistory.where(book_id: params[:book_id]).last
